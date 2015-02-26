@@ -1,0 +1,9 @@
+@namespace url(http://www.w3.org/1999/xhtml);
+@-moz-document domain("xing.com") {
+
+/* Get rid of all the bloat */
+#primary-actions, #notes,
+#myxing-bar, .toggle, #contact-path, .breadcrumb-nav, #nav-service, #header, #reputation-bar, .tab,
+.feedback-rotated, button, .status-message, #elevator-pitch, .duration
+{ display: none !important; }
+}
