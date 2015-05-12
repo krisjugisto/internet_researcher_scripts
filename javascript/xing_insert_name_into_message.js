@@ -5,6 +5,9 @@ if (window.location.href.indexOf("xing.com") > -1) {
   if (!!window.location.href.indexOf("xing.com/profile") && !!document.getElementsByTagName("textarea")[1]) {
     insertName(document.getElementsByTagName("textarea")[1]);
   }
+  else if (!!window.location.href.indexOf("xing.com/messages") && !!document.getElementById("msg-text")) {
+    insertName(document.getElementById("msg-text"));
+  }
 }
   
 function insertName(objTextArea) {
@@ -16,30 +19,27 @@ function insertName(objTextArea) {
   var candidateSplitName = candidateFullName.split(" ");
   var candidateFirstName = candidateSplitName[0];
   var candidateSurname = candidateSplitName[candidateSplitName.length -1];
-    
-  // Using genderize.io here, to determine the gender of the candidate. Just for Germans right now. I'm biased that way.
-  // https://genderize.io has a rate limit of 1000 names/day, So make sure, none of the calls are wasted.
-  var genderizeIO = httpGetRequest("https://api.genderize.io/?name=" + candidateFirstName + "&country_id=de");
-    
+  
+  // Using Namesia now, not rate limits, if used moderately.
+  var namesiaIO = httpGetRequest("https://api.namesia.de/names/de/" + candidateFirstName);
+  
   // Some basic error handling. Basically male is the default, that's bad.
-  var objectResponse = JSON.parse(genderizeIO);
-  if (objectResponse.hasOwnProperty('error')) {
+  var objectResponse = JSON.parse(namesiaIO);
+  if (objectResponse.hasOwnProperty('Error')) {
     var candidateGender = 'male';
   }
   else {
     var candidateGender = objectResponse['gender'];
   }
-    
+  
   // This will address the candidate correctly, hopefully.
   var salutation = "";
   salutation = candidateGender === "female" ? "Sehr geehrte Frau " : "Sehr geehrter Herr ";
-  
   objTextArea.innerHTML = salutation + candidateSurname + ",";
 }
 
 function httpGetRequest(getURL) {
   var requestHTTP = null;
-  
   requestHTTP = new XMLHttpRequest();
   requestHTTP.open("GET", getURL, false)
   requestHTTP.send(null);
