@@ -1,11 +1,15 @@
-var insertData = sessionStorage.insData;
+var insertData = localStorage.insData;
 if (insertData === undefined) {
   var promptData = prompt('No profile criteria found for this site. Please enter data');
-  sessionStorage.insData = promptData;
+  localStorage.insData = promptData;
   insertData = promptData;
 }
 
-if (window.location.href.indexOf("xing.com") > -1) {
+if (window.location.href.indexOf("xing.com/xtm") > -1) {
+  var oldInnerHTML = document.getElementsByClassName('content cv-entry group ')[0].innerHTML;
+  document.getElementsByClassName('content cv-entry group ')[0].innerHTML = insertData + "<br>" + oldInnerHTML;
+}
+else if (window.location.href.indexOf("xing.com") > -1) {
   var oldInnerHTML = document.getElementsByClassName('grey')[0].innerHTML;
   document.getElementsByClassName('grey')[0].innerHTML = oldInnerHTML + insertData;
 } else if (window.location.href.indexOf("experteer.de") > -1) {
