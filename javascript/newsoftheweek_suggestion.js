@@ -5,4 +5,5 @@ if (document.getSelection) {
     articleDesc = '';
 };
 articleTitle = document.title;
-void(window.open('mailto:MAILADDRESS?subject=' + encodeURIComponent(articleTitle) + '&body=' + encodeURIComponent(articleHref) + encodeURIComponent('\n') + encodeURIComponent(articleDesc) + encodeURIComponent('\nt p selaestus todo')));
+newWindow = window.open('mailto:MAILADDRESS?subject=' + encodeURIComponent(articleTitle) + '&body=' + encodeURIComponent(articleHref) + encodeURIComponent('\n') + encodeURIComponent(articleDesc) + encodeURIComponent('\nt p selaestus todo'), '', 'width=450, height=150');
+newWindow.document.body.innerHTML = '<h2 style="color:red" align="center">Seite gesendet</h2><p style="color:grey" align="center">Es sollte sich das Fenster des Standard-Mailprogramms geöffnet haben. Nun dort die Mail ohne weitere Änderung senden.</p>';
